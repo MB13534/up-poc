@@ -6,7 +6,6 @@
   <h3 align="center">Proof of Concept</h3>
   <p align="center">
 
-  [![Build Status](https://travis-ci.com/lrewater/up-poc.svg?branch=master)](https://travis-ci.com/lrewater/up-poc)
   [![Dependency Status](https://img.shields.io/david/dev/lrewater/up-poc?label=deps)](https://david-dm.org/lrewater/up-poc)
   [![Dependency Status](https://img.shields.io/david/dev/lrewater/up-poc?label=devDeps)](https://david-dm.org/lrewater/up-poc?type=dev)
 
