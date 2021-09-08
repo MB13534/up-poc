@@ -16,7 +16,7 @@ create table if not exists core.users
 	updated_by uuid
 );
 
-alter table core.users owner to postgres;
+alter table core.users owner to web_admin;
 
 create unique index if not exists users_id_uindex
 	on core.users (id);

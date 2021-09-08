@@ -23,7 +23,7 @@ create table app.contacts
 
 );
 
-alter table app.contacts owner to postgres;
+alter table app.contacts owner to web_admin;
 
 create unique index if not exists contacts_id_cindex
     on app.contacts (id);
