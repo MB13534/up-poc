@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       parent_id: {
-        type: UUID,
+        type: TEXT,
       },
       former_parent_id: {
         type: UUID,
