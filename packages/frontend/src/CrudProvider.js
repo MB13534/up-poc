@@ -16,14 +16,10 @@ export const CrudProvider = ({ children }) => {
     let regex = /\/models\/(.+)\//;
     if ((path.match(/\//g) || []).length === 2) {
       regex = /\/models\/(.+)/;
-      console.log("no ext");
     }
     let model = path.match(regex)[1];
 
-    console.log(model);
     setCurrentModel(model);
-
-    console.log("setting current model to " + model);
   }, []);
 
   return (
