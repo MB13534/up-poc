@@ -4,14 +4,8 @@ import {
   IdRenderer,
   StatusDotRenderer,
   StatusHelpIconRenderer,
-} from "../../../components/crud/ResultsRenderers";
-import { CRUD_FIELD_TYPES } from "../../../constants";
-
-export const DISPLAY_MODES = {
-  TABLE: "TABLE",
-  CARD: "CARD",
-  LIST: "LIST",
-};
+} from "../../components/crud/ResultsRenderers";
+import { CRUD_FIELD_TYPES } from "../../constants";
 
 export const displayName = (row) => {
   return `${row.firstname} ${row.lastname}`;
@@ -45,17 +39,6 @@ export function columns(modelName) {
       align: "center",
       renderCell: StatusDotRenderer,
     },
-    // {
-    //   field: "content_node_statuses.name",
-    //   headerName: " ",
-    //   width: 80,
-    //   sortable: false,
-    //   disableColumnMenu: true,
-    //   disableReorder: true,
-    //   filterable: false,
-    //   resizeable: false,
-    //   renderCell: StatusRenderer,
-    // },
     {
       field: "id",
       headerName: "ID",
@@ -149,3 +132,11 @@ export const fields = [
     isOpen: true,
   },
 ];
+
+const config = {
+  displayName,
+  columns,
+  fields,
+};
+
+export default config;

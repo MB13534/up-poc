@@ -26,12 +26,10 @@ import Default from "../pages/dashboards/Default";
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
-const ContactsIndex = async(() =>
-  import("../pages/models/contacts/ContactsIndex")
-);
-const ContactsView = async(() =>
-  import("../pages/models/contacts/ContactsView")
-);
+import ContactsConfig from "../pages/models/ContactsConfig";
+
+const CrudIndexPage = async(() => import("../components/crud/CrudIndexPage"));
+const CrudViewPage = async(() => import("../components/crud/CrudViewPage"));
 
 //   containsHome: true,
 
@@ -42,7 +40,8 @@ const modelRoutes = {
   header: "Models",
   icon: <Users />,
   children: null,
-  component: ContactsIndex,
+  component: CrudIndexPage,
+  config: ContactsConfig,
 };
 
 const modelCrudRoutes = {
@@ -54,17 +53,20 @@ const modelCrudRoutes = {
     {
       path: `${ROUTES.MODEL_CONTACTS}/:id`,
       name: "View Contact",
-      component: ContactsView,
+      component: CrudViewPage,
+      config: ContactsConfig,
       model: "Contact",
     },
     {
       path: `${ROUTES.MODEL_CONTACTS}/add`,
       name: "Add Contact",
-      component: ContactsView,
+      component: CrudViewPage,
+      config: ContactsConfig,
       model: "Contact",
     },
   ],
-  component: ContactsIndex,
+  component: CrudIndexPage,
+  config: ContactsConfig,
 };
 
 const accountRoutes = {
