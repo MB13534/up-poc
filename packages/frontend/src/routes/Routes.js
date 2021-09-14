@@ -20,10 +20,13 @@ import ProtectedRoute from "../auth/ProtectedRoute";
 import ProtectedPage from "../pages/protected/ProtectedPage";
 import { DevProvider } from "../DevProvider";
 import { AppProvider } from "../AppProvider";
+import { CrudProvider } from "../CrudProvider";
 import ScrollToTop from "../hooks/ScrollToTop";
 
-const childRoutes = (Layout, routes) =>
-  routes.map(
+const ProviderStub = ({ children }) => <div>{children}</div>;
+
+const ChildRoutes = (Layout, routes) => {
+  return routes.map(
     (
       {
         component: Component,
@@ -39,7 +42,7 @@ const childRoutes = (Layout, routes) =>
       index
     ) => {
       const Guard = guard || React.Fragment;
-      const Provider = provider || React.Fragment;
+      const Provider = provider || ProviderStub;
 
       if (crud) children = crud;
 
@@ -60,7 +63,7 @@ const childRoutes = (Layout, routes) =>
             render={(props) => (
               <Layout>
                 <Guard>
-                  <Provider>
+                  <Provider model={model}>
                     <Component {...props} modelName={model} config={config} />
                   </Provider>
                 </Guard>
@@ -102,33 +105,36 @@ const childRoutes = (Layout, routes) =>
       return output;
     }
   );
+};
 
 const Routes = () => {
   return (
     <Router>
       <Auth0ProviderWithHistory>
         <AppProvider>
-          <DevProvider>
-            <ScrollToTop />
-            <Switch>
-              {childRoutes(DashboardLayout, dashboardLayoutRoutes)}
-              {childRoutes(
-                DashboardMaxContentLayout,
-                dashboardMaxContentLayoutRoutes
-              )}
-              {childRoutes(DashboardLayout, protectedRoutes)}
-              {childRoutes(AuthLayout, authLayoutRoutes)}
-              {childRoutes(PresentationLayout, presentationLayoutRoutes)}
-              <ProtectedRoute path="/secret" component={ProtectedPage} />
-              <Route
-                render={() => (
-                  <AuthLayout>
-                    <Page404 />
-                  </AuthLayout>
+          <CrudProvider>
+            <DevProvider>
+              <ScrollToTop />
+              <Switch>
+                {ChildRoutes(DashboardLayout, dashboardLayoutRoutes)}
+                {ChildRoutes(
+                  DashboardMaxContentLayout,
+                  dashboardMaxContentLayoutRoutes
                 )}
-              />
-            </Switch>
-          </DevProvider>
+                {ChildRoutes(DashboardLayout, protectedRoutes)}
+                {ChildRoutes(AuthLayout, authLayoutRoutes)}
+                {ChildRoutes(PresentationLayout, presentationLayoutRoutes)}
+                <ProtectedRoute path="/secret" component={ProtectedPage} />
+                <Route
+                  render={() => (
+                    <AuthLayout>
+                      <Page404 />
+                    </AuthLayout>
+                  )}
+                />
+              </Switch>
+            </DevProvider>
+          </CrudProvider>
         </AppProvider>
       </Auth0ProviderWithHistory>
     </Router>

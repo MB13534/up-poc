@@ -27,6 +27,7 @@ const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
 import ContactsConfig from "../pages/models/ContactsConfig";
+import { CrudProvider } from "../CrudProvider";
 
 const CrudIndexPage = async(() => import("../components/crud/CrudIndexPage"));
 const CrudViewPage = async(() => import("../components/crud/CrudViewPage"));
@@ -55,6 +56,7 @@ const modelCrudRoutes = {
       name: "View Contact",
       component: CrudViewPage,
       config: ContactsConfig,
+      provider: CrudProvider,
       model: "Contact",
     },
     {
@@ -62,6 +64,7 @@ const modelCrudRoutes = {
       name: "Add Contact",
       component: CrudViewPage,
       config: ContactsConfig,
+      provider: CrudProvider,
       model: "Contact",
     },
   ],
