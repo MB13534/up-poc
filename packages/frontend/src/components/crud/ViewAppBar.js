@@ -19,7 +19,6 @@ import {
   CRUD_FORM_SUBMIT_TYPES,
   CRUD_VIEW_MODES,
   DIALOG_TYPES,
-  ROUTES,
 } from "../../constants";
 import { useApp } from "../../AppProvider";
 import { useHistory } from "react-router-dom";
@@ -101,18 +100,18 @@ function ViewAppBar({
 
   const afterClick = (newData) => {
     if (mode === CRUD_VIEW_MODES.ADD) {
-      history.push(`${ROUTES.MODEL_CONTACTS}/${newData.id}`);
+      history.push(`${window.location.pathname}/${newData.id}`);
     } else {
       triggerQueryReload();
     }
   };
 
   const afterCloseClick = () => {
-    history.push(ROUTES.MODEL_CONTACTS);
+    history.push(window.location.pathname);
   };
 
   const afterNewClick = () => {
-    history.push(`${ROUTES.MODEL_CONTACTS}/add`);
+    history.push(`${window.location.pathname}/add`);
   };
 
   const handleBackClick = () => {
@@ -120,7 +119,12 @@ function ViewAppBar({
       app.setConfirmDialogKey(DIALOG_TYPES.UNSAVED);
       app.setConfirmDialogOpen(true);
     } else {
-      history.push(ROUTES.MODEL_CONTACTS);
+      history.push(
+        window.location.pathname.substring(
+          0,
+          window.location.pathname.lastIndexOf("/")
+        )
+      );
     }
   };
 

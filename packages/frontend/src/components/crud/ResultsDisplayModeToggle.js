@@ -1,6 +1,6 @@
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Tooltip from "@material-ui/core/Tooltip";
-import { DISPLAY_MODES } from "../../pages/models/contacts/ContactsConfig";
+import { CRUD_DISPLAY_MODES } from "../../constants";
 import {
   ViewHeadline as TableModeIcon,
   ViewModule as CardModeIcon,
@@ -44,15 +44,15 @@ export function ResultsDisplayModeToggle({
         <Tooltip title="Table View">
           <ToggleButton
             variant="outlined"
-            className={{ active: displayMode === DISPLAY_MODES.TABLE }}
+            className={{ active: displayMode === CRUD_DISPLAY_MODES.TABLE }}
           >
             <TableModeIcon
               onMouseDown={() => {
                 localStorage.setItem(
                   `crudViewResultDisplayMode_${modelName}`,
-                  DISPLAY_MODES.TABLE
+                  CRUD_DISPLAY_MODES.TABLE
                 );
-                setDisplayMode(DISPLAY_MODES.TABLE);
+                setDisplayMode(CRUD_DISPLAY_MODES.TABLE);
               }}
             />
           </ToggleButton>
@@ -60,15 +60,15 @@ export function ResultsDisplayModeToggle({
         <Tooltip title="List View">
           <ToggleButton
             variant="outlined"
-            className={{ active: displayMode === DISPLAY_MODES.LIST }}
+            className={{ active: displayMode === CRUD_DISPLAY_MODES.LIST }}
           >
             <ListModeIcon
               onMouseDown={() => {
                 localStorage.setItem(
                   `crudViewResultDisplayMode_${modelName}`,
-                  DISPLAY_MODES.LIST
+                  CRUD_DISPLAY_MODES.LIST
                 );
-                setDisplayMode(DISPLAY_MODES.LIST);
+                setDisplayMode(CRUD_DISPLAY_MODES.LIST);
               }}
             />
           </ToggleButton>
@@ -76,15 +76,15 @@ export function ResultsDisplayModeToggle({
         <Tooltip title="Card View">
           <ToggleButton
             variant="outlined"
-            className={{ active: displayMode === DISPLAY_MODES.CARD }}
+            className={{ active: displayMode === CRUD_DISPLAY_MODES.CARD }}
           >
             <CardModeIcon
               onMouseDown={() => {
                 localStorage.setItem(
                   `crudViewResultDisplayMode_${modelName}`,
-                  DISPLAY_MODES.CARD
+                  CRUD_DISPLAY_MODES.CARD
                 );
-                setDisplayMode(DISPLAY_MODES.CARD);
+                setDisplayMode(CRUD_DISPLAY_MODES.CARD);
               }}
             />
           </ToggleButton>

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { fields } from "../../pages/models/contacts/ContactsConfig";
+import { fields } from "../../pages/models/ContactsConfig";
 import {
   Box,
   Card,

@@ -1,9 +1,12 @@
 import CardActionArea from "@material-ui/core/CardActionArea";
-import { ROUTES } from "../../constants";
-import { CardHeader as MuiCardHeader } from "@material-ui/core";
+import {
+  CardHeader as MuiCardHeader,
+  Grid,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import { ActionsDropdown, ActionsDropdownTypes } from "./ActionsDropdown";
-import { Grid, Paper, Typography } from "@material-ui/core";
-import { displayName } from "../../pages/models/contacts/ContactsConfig";
+import { displayName } from "../../pages/models/ContactsConfig";
 import React from "react";
 import styled from "styled-components/macro";
 import { useHistory } from "react-router-dom";
@@ -43,7 +46,7 @@ export function ResultsList({ modelName, data }) {
           <DataListItem key={row.id}>
             <CardActionArea
               onClick={() => {
-                history.push(`${ROUTES.MODEL_CONTACTS}/${row.id}`);
+                history.push(`${window.location.pathname}/${row.id}`);
               }}
             >
               <CardHeader

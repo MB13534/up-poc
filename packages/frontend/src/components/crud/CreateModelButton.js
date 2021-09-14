@@ -2,7 +2,6 @@ import { Button as MuiButton, isWidthUp, withWidth } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
 import React from "react";
 import * as PropTypes from "prop-types";
-import { ROUTES } from "../../constants";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
 
@@ -29,7 +28,7 @@ function CreateModelButton(props) {
       variant="contained"
       color="primary"
       startIcon={<AddIcon />}
-      onClick={() => history.push(`${ROUTES.MODEL_CONTACTS}/add`)}
+      onClick={() => history.push(`${window.location.pathname}/add`)}
     >
       {isWidthUp("sm", props.width) && "Create"}
       {isWidthUp("md", props.width) && ` ${props.modelName}`}

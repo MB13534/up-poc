@@ -74,6 +74,12 @@ export const CRUD_FIELD_TYPES = {
   EMAIL: "EMAIL",
 };
 
+export const CRUD_DISPLAY_MODES = {
+  TABLE: "TABLE",
+  CARD: "CARD",
+  LIST: "LIST",
+};
+
 export const CRUD_FORM_SUBMIT_TYPES = {
   SAVE: "SAVE",
   PUBLISH: "PUBLISH",

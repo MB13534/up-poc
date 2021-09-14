@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import Results from "../../../components/crud/Results";
+import Results from "./Results";
 import { isWidthDown, withWidth } from "@material-ui/core";
 import { pluralize } from "inflected";
-import { useApp } from "../../../AppProvider";
-import { DISPLAY_MODES } from "./ContactsConfig";
-import { ConfirmDeleteDialog } from "../../../components/crud/ConfirmDeleteDialog";
-import IndexAppBar from "../../../components/crud/IndexAppBar";
-import { ROUTES } from "../../../constants";
+import { useApp } from "../../AppProvider";
+import { CRUD_DISPLAY_MODES } from "../../constants";
+import { ConfirmDeleteDialog } from "./ConfirmDeleteDialog";
+import IndexAppBar from "./IndexAppBar";
 import { useHistory } from "react-router-dom";
 
-function ContactsIndex({ width, modelName }) {
+function CrudIndexPage({ width, modelName }) {
   const app = useApp();
   const history = useHistory();
 
   const [displayMode, setDisplayMode] = useState(
     localStorage.getItem(`crudViewResultDisplayMode_${modelName}`) ??
-      (isWidthDown("xs", width) ? DISPLAY_MODES.LIST : DISPLAY_MODES.TABLE)
+      (isWidthDown("xs", width)
+        ? CRUD_DISPLAY_MODES.LIST
+        : CRUD_DISPLAY_MODES.TABLE)
   );
 
   return (
@@ -28,7 +29,7 @@ function ContactsIndex({ width, modelName }) {
         open={app.confirmDialogOpen}
         setOpen={app.setConfirmDialogOpen}
         afterDelete={() => {
-          history.push(`${ROUTES.MODEL_CONTACTS}`);
+          history.push(`${window.location.pathname}`);
         }}
       />
 
@@ -43,4 +44,4 @@ function ContactsIndex({ width, modelName }) {
   );
 }
 
-export default withWidth()(ContactsIndex);
+export default withWidth()(CrudIndexPage);
