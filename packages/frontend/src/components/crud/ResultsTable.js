@@ -1,4 +1,4 @@
-import { columns as configColumns } from "../../pages/models/contacts/ContactsConfig";
+import { columns as configColumns } from "../../pages/models/ContactsConfig";
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { DataGrid as MuiDataGrid } from "@material-ui/data-grid";

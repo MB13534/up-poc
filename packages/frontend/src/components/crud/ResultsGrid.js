@@ -2,10 +2,9 @@ import React from "react";
 import styled from "styled-components/macro";
 import { Grid } from "@material-ui/core";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import { ROUTES } from "../../constants";
 import CardHeader from "@material-ui/core/CardHeader";
 import { ActionsDropdown, ActionsDropdownTypes } from "./ActionsDropdown";
-import { displayName } from "../../pages/models/contacts/ContactsConfig";
+import { displayName } from "../../pages/models/ContactsConfig";
 import Card from "@material-ui/core/Card";
 import { useHistory } from "react-router-dom";
 
@@ -31,7 +30,7 @@ export function ResultsGrid({ modelName, data }) {
               <DataCard>
                 <CardActionArea
                   onClick={() => {
-                    history.push(`${ROUTES.MODEL_CONTACTS}/${row.id}`);
+                    history.push(`${window.location.pathname}/${row.id}`);
                   }}
                   style={{ height: "100%" }}
                 >

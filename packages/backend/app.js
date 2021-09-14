@@ -33,6 +33,7 @@ app.use('/api/user', require('./core/routes/UserRoutes'));
 
 // Set app routes
 app.use('/api/contacts', require('./app/routes/ContactsRoutes'));
+app.use('/api/addresses', require('./app/routes/AddressesRoutes'));
 
 // Debug routes
 app.get('/debug-sentry', function mainHandler(req, res) {

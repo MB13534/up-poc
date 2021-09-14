@@ -32,6 +32,7 @@ const childRoutes = (Layout, routes) =>
         children,
         crud,
         model,
+        config,
         path,
         provider,
       },
@@ -42,7 +43,15 @@ const childRoutes = (Layout, routes) =>
 
       if (crud) children = crud;
 
-      const getRoute = ({ index, path, Guard, Component, model, Provider }) => {
+      const getRoute = ({
+        index,
+        path,
+        Guard,
+        Component,
+        model,
+        Provider,
+        config,
+      }) => {
         return (
           <Route
             key={index}
@@ -52,7 +61,7 @@ const childRoutes = (Layout, routes) =>
               <Layout>
                 <Guard>
                   <Provider>
-                    <Component {...props} modelName={model} />
+                    <Component {...props} modelName={model} config={config} />
                   </Provider>
                 </Guard>
               </Layout>
@@ -74,6 +83,7 @@ const childRoutes = (Layout, routes) =>
               Guard,
               Component,
               model: element.model,
+              config: element.config || config,
               Provider: provider,
             });
           })
@@ -85,7 +95,7 @@ const childRoutes = (Layout, routes) =>
 
       if (Component) {
         output.push(
-          getRoute({ index, path, Guard, Component, model, Provider })
+          getRoute({ index, path, Guard, Component, model, Provider, config })
         );
       }
 

@@ -4,29 +4,24 @@ import { useHistory, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { pluralize } from "inflected";
 import { Grid, isWidthDown, withWidth } from "@material-ui/core";
-import {
-  CRUD_FORM_SUBMIT_TYPES,
-  CRUD_VIEW_MODES,
-  ROUTES,
-} from "../../../constants";
+import { CRUD_FORM_SUBMIT_TYPES, CRUD_VIEW_MODES } from "../../constants";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "react-query";
-import Loader from "../../../components/Loader";
-import { ConfirmUnsavedDialog } from "../../../components/crud/ConfirmUnsavedDialog";
-import ViewAppBar from "../../../components/crud/ViewAppBar";
-import { displayName, fields } from "./ContactsConfig";
-import { useApp } from "../../../AppProvider";
-import { fetchRecord } from "../../../services/crudService";
-import { ViewEditor } from "../../../components/crud/ViewEditor";
-import { ViewSidebar } from "../../../components/crud/ViewSidebar";
-import { ConfirmDeleteDialog } from "../../../components/crud/ConfirmDeleteDialog";
-import useDebounce from "../../../hooks/useDebounce";
-import { useDev } from "../../../DevProvider";
-import { ErrorCard } from "../../../components/crud/ErrorCard";
+import Loader from "../Loader";
+import { ConfirmUnsavedDialog } from "./ConfirmUnsavedDialog";
+import ViewAppBar from "./ViewAppBar";
+import { useApp } from "../../AppProvider";
+import { fetchRecord } from "../../services/crudService";
+import { ViewEditor } from "./ViewEditor";
+import { ViewSidebar } from "./ViewSidebar";
+import { ConfirmDeleteDialog } from "./ConfirmDeleteDialog";
+import useDebounce from "../../hooks/useDebounce";
+import { useDev } from "../../DevProvider";
+import { ErrorCard } from "./ErrorCard";
 import Button from "@material-ui/core/Button";
 import { ChevronLeft } from "@material-ui/icons";
-import ConfirmEvolveDialog from "../../../components/crud/ConfirmEvolveDialog";
-import ConfirmDevolveDialog from "../../../components/crud/ConfirmDevolveDialog";
+import ConfirmEvolveDialog from "./ConfirmEvolveDialog";
+import ConfirmDevolveDialog from "./ConfirmDevolveDialog";
 
 const Content = styled(Grid)`
   height: calc(100% - 16px);
@@ -41,20 +36,8 @@ const Content = styled(Grid)`
   }
 `;
 
-const generateEmptyFields = () => {
-  return {
-    id: "",
-    ...fields.reduce(
-      (accumulator, current) => ({
-        ...accumulator,
-        [current.key]: "",
-      }),
-      {}
-    ),
-  };
-};
-
-function ContactsView({ width, modelName }) {
+function CrudViewPage({ config, width, modelName }) {
+  console.log(config);
   let { id } = useParams();
   const history = useHistory();
   const app = useApp();
@@ -108,6 +91,19 @@ function ContactsView({ width, modelName }) {
     },
     { keepPreviousData: true }
   );
+
+  const generateEmptyFields = () => {
+    return {
+      id: "",
+      ...config.fields.reduce(
+        (accumulator, current) => ({
+          ...accumulator,
+          [current.key]: "",
+        }),
+        {}
+      ),
+    };
+  };
 
   const triggerQueryReload = async () => {
     await refetch();
@@ -220,7 +216,14 @@ function ContactsView({ width, modelName }) {
             variant="contained"
             color="primary"
             startIcon={<ChevronLeft />}
-            onClick={() => history.push(ROUTES.MODEL_CONTACTS)}
+            onClick={() =>
+              history.push(
+                window.location.pathname.substring(
+                  0,
+                  window.location.pathname.lastIndexOf("/")
+                )
+              )
+            }
           >
             Back to {pluralize(modelName)}
           </Button>
@@ -267,7 +270,7 @@ function ContactsView({ width, modelName }) {
         triggerQueryReload={triggerQueryReload}
         formIsDirty={formIsDirty}
         formIsSubmitting={formIsSubmitting}
-        displayName={displayName(query.data)}
+        displayName={config.displayName(query.data)}
         numMismatches={numMismatches}
       />
 
@@ -302,4 +305,4 @@ function ContactsView({ width, modelName }) {
   );
 }
 
-export default withWidth()(ContactsView);
+export default withWidth()(CrudViewPage);

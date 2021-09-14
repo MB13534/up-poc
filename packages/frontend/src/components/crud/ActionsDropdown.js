@@ -1,21 +1,21 @@
 import { useApp } from "../../AppProvider";
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { CONTENT_NODE_STATUS_IDS, DIALOG_TYPES, ROUTES } from "../../constants";
+import { CONTENT_NODE_STATUS_IDS, DIALOG_TYPES } from "../../constants";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import {
-  Edit as EditIcon,
-  CloudUpload as PublishIcon,
   CloudOff as UnpublishIcon,
-  Restore as DevolveIcon,
-  Update as EvolveIcon,
+  CloudUpload as PublishIcon,
   Delete as DeleteIcon,
+  Edit as EditIcon,
   FileCopy as DuplicateIcon,
   MoreVert as MoreVertIcon,
+  Restore as DevolveIcon,
+  Update as EvolveIcon,
 } from "@material-ui/icons";
 import Menu from "@material-ui/core/Menu";
-import { Typography, MenuItem as MuiMenuItem } from "@material-ui/core";
+import { MenuItem as MuiMenuItem, Typography } from "@material-ui/core";
 import {
   publishRecord,
   unpublishRecord,
@@ -68,7 +68,7 @@ export function ActionsDropdown({
   };
 
   const onEditClick = () => {
-    history.push(`${ROUTES.MODEL_CONTACTS}/${params.id}`);
+    history.push(`${window.location.pathname}/${params.id}`);
   };
 
   const onDeleteClick = () => {

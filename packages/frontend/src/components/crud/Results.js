@@ -3,7 +3,7 @@ import React from "react";
 import { Grid, withWidth } from "@material-ui/core";
 import { useQuery } from "react-query";
 import Loader from "../Loader";
-import { DISPLAY_MODES } from "../../pages/models/contacts/ContactsConfig";
+import { CRUD_DISPLAY_MODES } from "../../constants";
 import { ResultsTable } from "./ResultsTable";
 import { ResultsList } from "./ResultsList";
 import { ResultsGrid } from "./ResultsGrid";
@@ -60,7 +60,7 @@ function Results({ modelName, width, displayMode }) {
         )}
         {data?.data?.length > 0 && (
           <>
-            {displayMode === DISPLAY_MODES.TABLE && (
+            {displayMode === CRUD_DISPLAY_MODES.TABLE && (
               <ResultsTable
                 modelName={modelName}
                 data={data.data}
@@ -68,10 +68,10 @@ function Results({ modelName, width, displayMode }) {
                 width={width}
               />
             )}
-            {displayMode === DISPLAY_MODES.LIST && (
+            {displayMode === CRUD_DISPLAY_MODES.LIST && (
               <ResultsList modelName={modelName} data={data.data} />
             )}
-            {displayMode === DISPLAY_MODES.CARD && (
+            {displayMode === CRUD_DISPLAY_MODES.CARD && (
               <ResultsGrid modelName={modelName} data={data.data} />
             )}
           </>
