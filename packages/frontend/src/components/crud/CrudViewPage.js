@@ -38,7 +38,6 @@ const Content = styled(Grid)`
 `;
 
 function CrudViewPage({ config, width, modelName }) {
-  console.log(config);
   let { id } = useParams();
   const history = useHistory();
   const app = useApp();
