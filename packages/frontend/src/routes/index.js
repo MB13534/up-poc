@@ -43,6 +43,7 @@ const modelRoutes = {
   children: null,
   component: CrudIndexPage,
   config: ContactsConfig,
+  provider: CrudProvider,
 };
 
 const modelCrudRoutes = {
@@ -70,6 +71,7 @@ const modelCrudRoutes = {
   ],
   component: CrudIndexPage,
   config: ContactsConfig,
+  provider: CrudProvider,
 };
 
 const accountRoutes = {

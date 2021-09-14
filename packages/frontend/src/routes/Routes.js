@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
+  authLayoutRoutes,
   dashboardLayoutRoutes,
   dashboardMaxContentLayoutRoutes,
-  authLayoutRoutes,
   presentationLayoutRoutes,
   protectedRoutes,
 } from "./index";
@@ -20,7 +20,6 @@ import ProtectedRoute from "../auth/ProtectedRoute";
 import ProtectedPage from "../pages/protected/ProtectedPage";
 import { DevProvider } from "../DevProvider";
 import { AppProvider } from "../AppProvider";
-import { CrudProvider } from "../CrudProvider";
 import ScrollToTop from "../hooks/ScrollToTop";
 
 const ProviderStub = ({ children }) => <div>{children}</div>;
@@ -112,29 +111,27 @@ const Routes = () => {
     <Router>
       <Auth0ProviderWithHistory>
         <AppProvider>
-          <CrudProvider>
-            <DevProvider>
-              <ScrollToTop />
-              <Switch>
-                {ChildRoutes(DashboardLayout, dashboardLayoutRoutes)}
-                {ChildRoutes(
-                  DashboardMaxContentLayout,
-                  dashboardMaxContentLayoutRoutes
+          <DevProvider>
+            <ScrollToTop />
+            <Switch>
+              {ChildRoutes(DashboardLayout, dashboardLayoutRoutes)}
+              {ChildRoutes(
+                DashboardMaxContentLayout,
+                dashboardMaxContentLayoutRoutes
+              )}
+              {ChildRoutes(DashboardLayout, protectedRoutes)}
+              {ChildRoutes(AuthLayout, authLayoutRoutes)}
+              {ChildRoutes(PresentationLayout, presentationLayoutRoutes)}
+              <ProtectedRoute path="/secret" component={ProtectedPage} />
+              <Route
+                render={() => (
+                  <AuthLayout>
+                    <Page404 />
+                  </AuthLayout>
                 )}
-                {ChildRoutes(DashboardLayout, protectedRoutes)}
-                {ChildRoutes(AuthLayout, authLayoutRoutes)}
-                {ChildRoutes(PresentationLayout, presentationLayoutRoutes)}
-                <ProtectedRoute path="/secret" component={ProtectedPage} />
-                <Route
-                  render={() => (
-                    <AuthLayout>
-                      <Page404 />
-                    </AuthLayout>
-                  )}
-                />
-              </Switch>
-            </DevProvider>
-          </CrudProvider>
+              />
+            </Switch>
+          </DevProvider>
         </AppProvider>
       </Auth0ProviderWithHistory>
     </Router>
