@@ -7,6 +7,7 @@ import { ActionsDropdown, ActionsDropdownTypes } from "./ActionsDropdown";
 import { displayName } from "../../pages/models/ContactsConfig";
 import Card from "@material-ui/core/Card";
 import { useHistory } from "react-router-dom";
+import { useCrud } from "../../CrudProvider";
 
 const DataCard = styled(Card)`
   height: 100%;
@@ -20,6 +21,7 @@ const DataCard = styled(Card)`
 
 export function ResultsGrid({ modelName, data }) {
   const history = useHistory();
+  const crud = useCrud();
 
   return (
     <div style={{ padding: "16px" }}>
@@ -30,7 +32,7 @@ export function ResultsGrid({ modelName, data }) {
               <DataCard>
                 <CardActionArea
                   onClick={() => {
-                    history.push(`${window.location.pathname}/${row.id}`);
+                    history.push(`${crud.getModelBasePath()}/${row.id}`);
                   }}
                   style={{ height: "100%" }}
                 >

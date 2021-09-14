@@ -4,6 +4,7 @@ import React from "react";
 import * as PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
+import { useCrud } from "../../CrudProvider";
 
 const Button = styled(MuiButton)`
   white-space: nowrap;
@@ -21,6 +22,7 @@ const Button = styled(MuiButton)`
 
 function CreateModelButton(props) {
   const history = useHistory();
+  const crud = useCrud();
 
   return (
     <Button
@@ -28,7 +30,7 @@ function CreateModelButton(props) {
       variant="contained"
       color="primary"
       startIcon={<AddIcon />}
-      onClick={() => history.push(`${window.location.pathname}/add`)}
+      onClick={() => history.push(`${crud.getModelBasePath()}/add`)}
     >
       {isWidthUp("sm", props.width) && "Create"}
       {isWidthUp("md", props.width) && ` ${props.modelName}`}

@@ -20,6 +20,20 @@ const DataTableWrap = styled.div`
 const DataTable = styled(MuiDataGrid)`
   &.MuiDataGrid-root {
     border: none;
+    font-size: ${(props) => props.theme.typography.body2.fontSize};
+    font-weight: ${(props) => props.theme.typography.fontWeightLight};
+    font-family: ${(props) => props.theme.typography.fontFamily};
+    color: ${(props) => props.theme.palette.text.secondary} !important;
+
+    .MuiDataGrid-cell,
+    .MuiDataGrid-columnsContainer {
+      color: ${(props) => props.theme.palette.text.primary} !important;
+      border-bottom: 1px solid
+        ${(props) =>
+          props.theme.palette.type === "dark"
+            ? "rgba(255, 255, 255, 0.12)"
+            : "rgba(0, 0, 0, 0.12)"};
+    }
   }
   &.MuiDataGrid-root .MuiDataGrid-columnHeader:focus,
   &.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within,

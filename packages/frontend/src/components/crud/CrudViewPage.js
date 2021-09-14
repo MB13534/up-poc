@@ -22,6 +22,7 @@ import Button from "@material-ui/core/Button";
 import { ChevronLeft } from "@material-ui/icons";
 import ConfirmEvolveDialog from "./ConfirmEvolveDialog";
 import ConfirmDevolveDialog from "./ConfirmDevolveDialog";
+import { useCrud } from "../../CrudProvider";
 
 const Content = styled(Grid)`
   height: calc(100% - 16px);
@@ -42,6 +43,7 @@ function CrudViewPage({ config, width, modelName }) {
   const history = useHistory();
   const app = useApp();
   const dev = useDev();
+  const crud = useCrud();
 
   const mode = id === "add" ? CRUD_VIEW_MODES.ADD : CRUD_VIEW_MODES.EDIT;
 
@@ -216,14 +218,7 @@ function CrudViewPage({ config, width, modelName }) {
             variant="contained"
             color="primary"
             startIcon={<ChevronLeft />}
-            onClick={() =>
-              history.push(
-                window.location.pathname.substring(
-                  0,
-                  window.location.pathname.lastIndexOf("/")
-                )
-              )
-            }
+            onClick={() => history.push(crud.getModelBasePath())}
           >
             Back to {pluralize(modelName)}
           </Button>

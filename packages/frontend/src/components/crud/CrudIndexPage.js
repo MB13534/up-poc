@@ -8,9 +8,11 @@ import { CRUD_DISPLAY_MODES } from "../../constants";
 import { ConfirmDeleteDialog } from "./ConfirmDeleteDialog";
 import IndexAppBar from "./IndexAppBar";
 import { useHistory } from "react-router-dom";
+import { useCrud } from "../../CrudProvider";
 
 function CrudIndexPage({ width, modelName }) {
   const app = useApp();
+  const crud = useCrud();
   const history = useHistory();
 
   const [displayMode, setDisplayMode] = useState(
@@ -29,7 +31,7 @@ function CrudIndexPage({ width, modelName }) {
         open={app.confirmDialogOpen}
         setOpen={app.setConfirmDialogOpen}
         afterDelete={() => {
-          history.push(`${window.location.pathname}`);
+          history.push(`${crud.getModelBasePath()}`);
         }}
       />
 
