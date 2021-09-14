@@ -24,6 +24,7 @@ import useRedux from "../../hooks/useRedux";
 import { redoRecord, undoRecord } from "../../services/crudService";
 import useService from "../../hooks/useService";
 import styled from "styled-components/macro";
+import { useCrud } from "../../CrudProvider";
 
 const MenuItem = styled(MuiMenuItem)`
   &.Mui-disabled {
@@ -44,6 +45,7 @@ export function ActionsDropdown({
   ...props
 }) {
   const app = useApp();
+  const crud = useCrud();
   const history = useHistory();
   const service = useService();
   const redux = useRedux();
@@ -68,7 +70,7 @@ export function ActionsDropdown({
   };
 
   const onEditClick = () => {
-    history.push(`${window.location.pathname}/${params.id}`);
+    history.push(`${crud.getModelBasePath()}/${params.id}`);
   };
 
   const onDeleteClick = () => {

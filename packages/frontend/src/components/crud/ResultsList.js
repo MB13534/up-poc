@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import { TimestampRenderer, ValueWithIconRenderer } from "./ResultsRenderers";
 
 import { Home as AddressIcon, Phone as PhoneIcon } from "react-feather";
+import { useCrud } from "../../CrudProvider";
 
 const DataListItem = styled(Paper)`
   border-radius: 0;
@@ -39,6 +40,8 @@ const CardHeader = styled(MuiCardHeader)`
 
 export function ResultsList({ modelName, data }) {
   const history = useHistory();
+  const crud = useCrud();
+
   return (
     <>
       {data.map((row) => {
@@ -46,7 +49,7 @@ export function ResultsList({ modelName, data }) {
           <DataListItem key={row.id}>
             <CardActionArea
               onClick={() => {
-                history.push(`${window.location.pathname}/${row.id}`);
+                history.push(`${crud.getModelBasePath()}/${row.id}`);
               }}
             >
               <CardHeader

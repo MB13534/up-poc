@@ -25,6 +25,7 @@ import { useHistory } from "react-router-dom";
 import SplitPublishButton from "./SplitPublishButton";
 import { ActionsDropdown, ActionsDropdownTypes } from "./ActionsDropdown";
 import { StatusDotRenderer, StatusHelpIconRenderer } from "./ResultsRenderers";
+import { useCrud } from "../../CrudProvider";
 
 const AppBar = styled(MuiAppBar)`
   min-height: 72px;
@@ -85,6 +86,7 @@ function ViewAppBar({
   width,
 }) {
   const app = useApp();
+  const crud = useCrud();
   const history = useHistory();
   const theme = useTheme();
 
@@ -100,18 +102,18 @@ function ViewAppBar({
 
   const afterClick = (newData) => {
     if (mode === CRUD_VIEW_MODES.ADD) {
-      history.push(`${window.location.pathname}/${newData.id}`);
+      history.push(`${crud.getModelBasePath()}/${newData.id}`);
     } else {
       triggerQueryReload();
     }
   };
 
   const afterCloseClick = () => {
-    history.push(window.location.pathname);
+    history.push(crud.getModelBasePath());
   };
 
   const afterNewClick = () => {
-    history.push(`${window.location.pathname}/add`);
+    history.push(`${crud.getModelBasePath()}/add`);
   };
 
   const handleBackClick = () => {
@@ -119,12 +121,7 @@ function ViewAppBar({
       app.setConfirmDialogKey(DIALOG_TYPES.UNSAVED);
       app.setConfirmDialogOpen(true);
     } else {
-      history.push(
-        window.location.pathname.substring(
-          0,
-          window.location.pathname.lastIndexOf("/")
-        )
-      );
+      history.push(crud.getModelBasePath());
     }
   };
 
