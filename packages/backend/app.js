@@ -6,8 +6,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('./core/models');
 const {setHeaders} = require('./core/middleware');
+const {addCrudRoutes} = require('./core/middleware/addCrudRoutes');
 
 const PORT = process.env.PORT || 3005;
+
+if (!process.env.PORT) process.env.PORT = PORT;
 
 const app = express();
 
@@ -30,6 +33,9 @@ app.use(setHeaders);
 
 // Set core routes
 app.use('/api/user', require('./core/routes/UserRoutes'));
+
+// Set crud routes
+addCrudRoutes(app);
 
 // Set app routes
 app.use('/api/contacts', require('./app/routes/ContactsRoutes'));

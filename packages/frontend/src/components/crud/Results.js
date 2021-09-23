@@ -8,7 +8,7 @@ import { ResultsTable } from "./ResultsTable";
 import { ResultsList } from "./ResultsList";
 import { ResultsGrid } from "./ResultsGrid";
 import styled from "styled-components/macro";
-import { pluralize } from "inflected";
+import * as inflector from "inflected";
 import CreateModelButton from "./CreateModelButton";
 import { findRecords } from "../../services/crudService";
 import { ErrorCard } from "./ErrorCard";
@@ -26,7 +26,9 @@ const Root = styled(Grid)`
 function Results({ config, modelName, width, displayMode }) {
   const app = useApp();
   const service = useService({ toast: false });
-  const endpoint = pluralize(modelName).toLowerCase();
+  const endpoint = inflector.dasherize(
+    inflector.underscore(inflector.pluralize(modelName))
+  );
   const crud = useSelector((state) => state.crudReducer);
   const { isLoading, error, data } = useQuery(
     [`${endpoint}.index`, crud.record],
