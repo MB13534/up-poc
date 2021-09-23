@@ -7,7 +7,7 @@ import {
   useTheme,
   withWidth,
 } from "@material-ui/core";
-import { pluralize } from "inflected";
+import * as inflector from "inflected";
 import { ResultsDisplayModeToggle } from "./ResultsDisplayModeToggle";
 import React from "react";
 import styled from "styled-components/macro";
@@ -72,7 +72,9 @@ function IndexAppBar({ modelName, width, displayMode, setDisplayMode }) {
             width: isWidthUp("sm", width) ? "100%" : "auto",
           }}
         >
-          <Typography variant="h5">{pluralize(modelName)}</Typography>
+          <Typography variant="h5">
+            {inflector.titleize(inflector.pluralize(modelName))}
+          </Typography>
         </Grid>
         <Grid container item justify={"space-between"}>
           <Grid

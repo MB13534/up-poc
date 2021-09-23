@@ -1,4 +1,11 @@
+import React from "react";
+import { Users } from "react-feather";
+
 // Configuration
+export const CRUD_MODELS = [
+  { name: "Contacts", icon: <Users />, header: "Models" },
+  //{ name: "FlowFromStages" },
+];
 
 export const THEME = {
   MAIN_SIDEBAR_WIDTH: 258,

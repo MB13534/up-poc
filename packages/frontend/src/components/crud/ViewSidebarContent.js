@@ -11,6 +11,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { useAuth0 } from "@auth0/auth0-react";
 import { formatDate } from "../../utils/date";
 import ViewSidebarVersionTimeline from "./ViewSidebarVersionTimeline";
+import * as inflector from "inflected";
 
 const HeaderText = styled(Typography)`
   text-transform: uppercase;
@@ -114,7 +115,7 @@ function ViewSidebarContent({
         <GridRow container justify="space-between" alignItems="center">
           <GridKey item>Model</GridKey>
           <GridValue item>
-            <TypeChip label={modelName} />
+            <TypeChip label={inflector.titleize(modelName)} />
           </GridValue>
         </GridRow>
         <GridRow container justify="space-between" alignItems="center">

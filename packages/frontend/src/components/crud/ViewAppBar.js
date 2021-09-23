@@ -26,6 +26,7 @@ import SplitPublishButton from "./SplitPublishButton";
 import { ActionsDropdown, ActionsDropdownTypes } from "./ActionsDropdown";
 import { StatusDotRenderer, StatusHelpIconRenderer } from "./ResultsRenderers";
 import { useCrud } from "../../CrudProvider";
+import * as inflector from "inflected";
 
 const AppBar = styled(MuiAppBar)`
   min-height: 72px;
@@ -149,7 +150,7 @@ function ViewAppBar({
         </Grid>
         {isWidthUp("md", width) && mode === CRUD_VIEW_MODES.EDIT && (
           <Grid item>
-            <ContentTypeChip label={modelName} />
+            <ContentTypeChip label={inflector.titleize(modelName)} />
           </Grid>
         )}
         {mode === CRUD_VIEW_MODES.EDIT && (
@@ -170,7 +171,9 @@ function ViewAppBar({
           }}
         >
           <Typography variant="h5" className="ellipsis">
-            {mode === CRUD_VIEW_MODES.ADD && <span>New {modelName}</span>}
+            {mode === CRUD_VIEW_MODES.ADD && (
+              <span>New {inflector.titleize(modelName)}</span>
+            )}
             {mode === CRUD_VIEW_MODES.EDIT && <span>{displayName}</span>}
           </Typography>
         </Grid>
