@@ -4,7 +4,7 @@ import { Users } from "react-feather";
 // Configuration
 export const CRUD_MODELS = [
   { name: "Contacts", icon: <Users />, header: "Models" },
-  { name: "FlowFromStages" },
+  //{ name: "FlowFromStages" },
 ];
 
 export const THEME = {
