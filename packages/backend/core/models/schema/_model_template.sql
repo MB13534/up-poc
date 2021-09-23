@@ -18,7 +18,7 @@ create table TOKEN_SCHEMA.TOKEN_TABLE_NAME
 
 );
 
-alter table TOKEN_SCHEMA.TOKEN_TABLE_NAME owner to postgres;
+alter table TOKEN_SCHEMA.TOKEN_TABLE_NAME owner to TOKEN_DB_USER;
 
 create unique index if not exists TOKEN_TABLE_NAME_id_cindex
   on TOKEN_SCHEMA.TOKEN_TABLE_NAME (id);

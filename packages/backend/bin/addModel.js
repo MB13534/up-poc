@@ -268,6 +268,7 @@ async function createTable(name) {
   sql = sql.replace(/TOKEN_SCHEMA/g, appSchema);
   sql = sql.replace(/TOKEN_TABLE_NAME/g, name);
   sql = sql.replace(/TOKEN_DISPLAY_COLUMN_NAME/g, defaultDisplayName);
+  sql = sql.replace(/TOKEN_DB_USER/g, process.env.PG_USERNAME);
 
   try {
     await sequelize.query(sql);
