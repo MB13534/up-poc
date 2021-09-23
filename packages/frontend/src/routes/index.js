@@ -22,57 +22,59 @@ import { DocumentationProvider } from "../pages/docs/DocumentationProvider";
 import { dasherize, underscore } from "inflected";
 import GettingStarted from "../pages/docs/GettingStarted";
 import Default from "../pages/dashboards/Default";
+import ContactsConfig from "../pages/models/ContactsConfig";
+import { CrudProvider } from "../CrudProvider";
 
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
-
-import ContactsConfig from "../pages/models/ContactsConfig";
-import { CrudProvider } from "../CrudProvider";
 
 const CrudIndexPage = async(() => import("../components/crud/CrudIndexPage"));
 const CrudViewPage = async(() => import("../components/crud/CrudViewPage"));
 
 //   containsHome: true,
 
-const modelRoutes = {
-  id: "Contacts",
-  path: ROUTES.MODEL_CONTACTS,
-  model: "Contact",
-  header: "Models",
-  icon: <Users />,
-  children: null,
-  component: CrudIndexPage,
-  config: ContactsConfig,
-  provider: CrudProvider,
-};
+const modelSidebarList = [
+  {
+    id: "Contacts",
+    path: "/models/contacts",
+    model: "Contact",
+    header: "Models",
+    icon: <Users />,
+    children: null,
+    component: CrudIndexPage,
+    config: ContactsConfig,
+    provider: CrudProvider,
+  },
+];
 
-const modelCrudRoutes = {
-  id: "Contacts",
-  path: ROUTES.MODEL_CONTACTS,
-  model: "Contact",
-  header: "Models",
-  crud: [
-    {
-      path: `${ROUTES.MODEL_CONTACTS}/:id`,
-      name: "View Contact",
-      component: CrudViewPage,
-      config: ContactsConfig,
-      provider: CrudProvider,
-      model: "Contact",
-    },
-    {
-      path: `${ROUTES.MODEL_CONTACTS}/add`,
-      name: "Add Contact",
-      component: CrudViewPage,
-      config: ContactsConfig,
-      provider: CrudProvider,
-      model: "Contact",
-    },
-  ],
-  component: CrudIndexPage,
-  config: ContactsConfig,
-  provider: CrudProvider,
-};
+const modelCrudRoutes = [
+  {
+    id: "Contacts",
+    path: "/models/contacts",
+    model: "Contact",
+    crud: [
+      {
+        path: "/models/contacts/:id",
+        name: "View Contact",
+        component: CrudViewPage,
+        config: ContactsConfig,
+        provider: CrudProvider,
+        model: "Contact",
+      },
+      {
+        path: "/models/contacts/add",
+        name: "Add Contact",
+        component: CrudViewPage,
+        config: ContactsConfig,
+        provider: CrudProvider,
+        model: "Contact",
+      },
+    ],
+    component: CrudIndexPage,
+    config: ContactsConfig,
+    provider: CrudProvider,
+  },
+];
 
 const accountRoutes = {
   id: "Account",
@@ -268,7 +270,10 @@ export const dashboardLayoutRoutes = [
   adminRoutes,
 ];
 
-export const dashboardMaxContentLayoutRoutes = [modelRoutes, modelCrudRoutes];
+export const dashboardMaxContentLayoutRoutes = [
+  ...modelSidebarList,
+  ...modelCrudRoutes,
+];
 
 // Routes using the Auth layout
 export const authLayoutRoutes = [accountRoutes];
@@ -282,7 +287,7 @@ export const protectedRoutes = [protectedPageRoutes];
 // Routes visible in the sidebar
 export const sidebarRoutes = [
   mainRoutes,
-  modelRoutes,
+  ...modelSidebarList,
   adminRoutes,
   componentsRoutes,
   documentationRoutes,

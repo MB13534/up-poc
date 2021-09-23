@@ -38,7 +38,6 @@ const Content = styled(Grid)`
 `;
 
 function CrudViewPage({ config, width, modelName }) {
-  console.log(config);
   let { id } = useParams();
   const history = useHistory();
   const app = useApp();
@@ -241,6 +240,7 @@ function CrudViewPage({ config, width, modelName }) {
         modelName={modelName}
         open={app.confirmDialogOpen}
         setOpen={app.setConfirmDialogOpen}
+        config={config}
       />
 
       <ConfirmEvolveDialog
@@ -271,6 +271,7 @@ function CrudViewPage({ config, width, modelName }) {
 
       <Content container spacing={0} justify={"space-between"}>
         <ViewEditor
+          fields={config.fields}
           data={query.data}
           valueCache={debouncedValueCache}
           setValueCache={setValueCache}

@@ -23,7 +23,7 @@ const Root = styled(Grid)`
   }
 `;
 
-function Results({ modelName, width, displayMode }) {
+function Results({ config, modelName, width, displayMode }) {
   const app = useApp();
   const service = useService({ toast: false });
   const endpoint = pluralize(modelName).toLowerCase();
@@ -62,6 +62,7 @@ function Results({ modelName, width, displayMode }) {
           <>
             {displayMode === CRUD_DISPLAY_MODES.TABLE && (
               <ResultsTable
+                configColumns={config.columns}
                 modelName={modelName}
                 data={data.data}
                 endpoint={endpoint}
@@ -69,10 +70,19 @@ function Results({ modelName, width, displayMode }) {
               />
             )}
             {displayMode === CRUD_DISPLAY_MODES.LIST && (
-              <ResultsList modelName={modelName} data={data.data} />
+              <ResultsList
+                displayName={config.displayName}
+                modelName={modelName}
+                data={data.data}
+              />
             )}
             {displayMode === CRUD_DISPLAY_MODES.CARD && (
-              <ResultsGrid modelName={modelName} data={data.data} />
+              <ResultsGrid
+                configColumns={config.columns}
+                displayName={config.displayName}
+                modelName={modelName}
+                data={data.data}
+              />
             )}
           </>
         )}

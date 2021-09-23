@@ -142,7 +142,7 @@ export function ActionsDropdown({
       label: "Publish",
       onClick: handleClick(onPublishClick),
       icon: PublishIcon,
-      visibleForTypes: [ActionsDropdownTypes.INDEX],
+      visibleForTypes: [ActionsDropdownTypes.INDEX, ActionsDropdownTypes.VIEW],
     },
     evolve: {
       label: "Evolve",

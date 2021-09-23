@@ -9,7 +9,7 @@ module.exports = {
       description: 'Lint the code',
     },
     {
-      name: 'lint:fix',
+      name: 'format',
       description: 'Format the code',
     },
     {
@@ -19,6 +19,14 @@ module.exports = {
     {
       name: 'commit',
       description: 'Commit the code',
+    },
+    {
+      name: 'add:model',
+      description: 'Generate a new CRUD interface',
+    },
+    {
+      name: 'add:page',
+      description: 'Generate a new page',
     },
   ],
 };
