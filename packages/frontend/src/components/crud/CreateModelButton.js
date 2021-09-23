@@ -5,6 +5,7 @@ import * as PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
 import { useCrud } from "../../CrudProvider";
+import * as inflector from "inflected";
 
 const Button = styled(MuiButton)`
   white-space: nowrap;
@@ -33,7 +34,8 @@ function CreateModelButton(props) {
       onClick={() => history.push(`${crud.getModelBasePath()}/add`)}
     >
       {isWidthUp("sm", props.width) && "Create"}
-      {isWidthUp("md", props.width) && ` ${props.modelName}`}
+      {isWidthUp("md", props.width) &&
+        ` ${inflector.titleize(props.modelName)}`}
     </Button>
   );
 }

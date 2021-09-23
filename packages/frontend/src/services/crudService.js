@@ -2,6 +2,7 @@ import axios from "axios";
 import { pluralize } from "inflected";
 import { CONFIG, CONTENT_NODE_STATUS_IDS } from "../constants";
 import { v4 as uuidv4 } from "uuid";
+import * as inflector from "inflected";
 
 const applyLatestVersionToRecord = (record) => {
   if (record.versions.length === 0) return record;
@@ -72,7 +73,10 @@ const applyLatestVersionToRecord = (record) => {
 };
 
 const getUrl = (modelName) => {
-  const endpoint = pluralize(modelName).toLowerCase();
+  const endpoint = inflector.dasherize(
+    inflector.underscore(inflector.pluralize(modelName))
+  );
+
   return `${process.env.REACT_APP_ENDPOINT}/api/${endpoint}`;
 };
 

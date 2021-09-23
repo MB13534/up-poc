@@ -1,11 +1,19 @@
 /* eslint-disable import/first */
 import React from "react";
-import { ROUTES } from "../constants";
+import { CRUD_MODELS, ROUTES } from "../constants";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import async from "../components/Async";
 
-import { BookOpen, Grid, Home, List, Monitor, Users } from "react-feather";
+import {
+  BookOpen,
+  Database,
+  Grid,
+  Home,
+  List,
+  Monitor,
+  Users,
+} from "react-feather";
 
 import AuthGuard from "../components/AuthGuard";
 import AdminGuard from "../components/AdminGuard";
@@ -19,62 +27,70 @@ import Welcome from "../pages/docs/Welcome";
 import Support from "../pages/docs/Support";
 import { All, EXAMPLE_COMPONENTS } from "../pages/components/All";
 import { DocumentationProvider } from "../pages/docs/DocumentationProvider";
+import * as inflector from "inflected";
 import { dasherize, underscore } from "inflected";
 import GettingStarted from "../pages/docs/GettingStarted";
 import Default from "../pages/dashboards/Default";
-import ContactsConfig from "../pages/models/ContactsConfig";
 import { CrudProvider } from "../CrudProvider";
-
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
 const CrudIndexPage = async(() => import("../components/crud/CrudIndexPage"));
 const CrudViewPage = async(() => import("../components/crud/CrudViewPage"));
 
-//   containsHome: true,
+const getSidebarMenu = (list) => {
+  return list.map((item) => {
+    const slug = inflector.dasherize(inflector.underscore(item.name));
+    return {
+      id: inflector.titleize(item.name),
+      path: `/models/${slug}`,
+      model: inflector.singularize(item.name),
+      icon: item.icon || <Database />,
+      component: CrudIndexPage,
+      config: require(`../pages/models/${item.name}Config`),
+      provider: CrudProvider,
+      children: item.children,
+      header: item.header,
+    };
+  });
+};
 
-const modelSidebarList = [
-  {
-    id: "Contacts",
-    path: "/models/contacts",
-    model: "Contact",
-    header: "Models",
-    icon: <Users />,
-    children: null,
-    component: CrudIndexPage,
-    config: ContactsConfig,
-    provider: CrudProvider,
-  },
-];
+const getCrudRoutes = (list) => {
+  return list.map((item) => {
+    const config = require(`../pages/models/${item.name}Config`);
+    const slug = inflector.dasherize(inflector.underscore(item.name));
 
-const modelCrudRoutes = [
-  {
-    id: "Contacts",
-    path: "/models/contacts",
-    model: "Contact",
-    crud: [
-      {
-        path: "/models/contacts/:id",
-        name: "View Contact",
-        component: CrudViewPage,
-        config: ContactsConfig,
-        provider: CrudProvider,
-        model: "Contact",
-      },
-      {
-        path: "/models/contacts/add",
-        name: "Add Contact",
-        component: CrudViewPage,
-        config: ContactsConfig,
-        provider: CrudProvider,
-        model: "Contact",
-      },
-    ],
-    component: CrudIndexPage,
-    config: ContactsConfig,
-    provider: CrudProvider,
-  },
-];
+    return {
+      id: inflector.titleize(item.name),
+      path: `/models/${slug}`,
+      model: inflector.singularize(item.name),
+      component: CrudIndexPage,
+      provider: CrudProvider,
+      config,
+      crud: [
+        {
+          path: `/models/${slug}/:id`,
+          name: `View ${inflector.titleize(inflector.singularize(item.name))}`,
+          component: CrudViewPage,
+          provider: CrudProvider,
+          model: inflector.singularize(item.name),
+          config,
+        },
+        {
+          path: `/models/${slug}/add`,
+          name: `Add ${inflector.titleize(inflector.singularize(item.name))}`,
+          component: CrudViewPage,
+          provider: CrudProvider,
+          model: inflector.singularize(item.name),
+          config,
+        },
+      ],
+    };
+  });
+};
+
+const crudSidebarMenu = [...getSidebarMenu(CRUD_MODELS)];
+const modelCrudRoutes = [...getCrudRoutes(CRUD_MODELS)];
 
 const accountRoutes = {
   id: "Account",
@@ -271,7 +287,7 @@ export const dashboardLayoutRoutes = [
 ];
 
 export const dashboardMaxContentLayoutRoutes = [
-  ...modelSidebarList,
+  ...crudSidebarMenu,
   ...modelCrudRoutes,
 ];
 
@@ -287,7 +303,7 @@ export const protectedRoutes = [protectedPageRoutes];
 // Routes visible in the sidebar
 export const sidebarRoutes = [
   mainRoutes,
-  ...modelSidebarList,
+  ...crudSidebarMenu,
   adminRoutes,
   componentsRoutes,
   documentationRoutes,
