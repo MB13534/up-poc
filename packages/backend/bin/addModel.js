@@ -364,6 +364,9 @@ function done() {
   log.notice(
     '    ' + path.resolve(__dirname, '../../frontend/src/routes/index.js')
   );
+  log.notice(
+    chalk`Also, remember to restart the backend with {yellow yarn start:backend}`
+  );
 }
 
 function isPlural(word) {
