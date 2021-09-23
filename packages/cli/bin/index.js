@@ -3,6 +3,7 @@
 const chalk = require('chalk');
 const semver = require('semver');
 const inquirer = require('inquirer');
+const readline = require('readline');
 const {execSync} = require('child_process');
 const packageJson = require('../package.json');
 const config = require('./config');
@@ -23,6 +24,12 @@ const processContribSelections = (command) => {
   log.info('Running Command:');
   log.info(chalk`  name: {magenta ${command}}`);
   try {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.close();
+
     execSync(`yarn ${command}`, {stdio: 'inherit'});
     process.exit(0);
   } catch (err) {
@@ -34,7 +41,7 @@ const processContribSelections = (command) => {
 const longestLen = (arr) => arr.reduce((a, b) => Math.max(a, b.name.length), 0);
 
 const showContribWizard = () => {
-  output(chalk`Welcome to the LRE Water Contributor Console!\n`);
+  output(chalk`Welcome to the LRE Water Developer Console!\n`);
 
   // Ask contributors to choose a run-script command
   inquirer

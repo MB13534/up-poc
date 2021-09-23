@@ -6,7 +6,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ActionsDropdown, ActionsDropdownTypes } from "./ActionsDropdown";
-import { displayName } from "../../pages/models/ContactsConfig";
 import React from "react";
 import styled from "styled-components/macro";
 import { useHistory } from "react-router-dom";
@@ -38,7 +37,7 @@ const CardHeader = styled(MuiCardHeader)`
   }
 `;
 
-export function ResultsList({ modelName, data }) {
+export function ResultsList({ displayName, modelName, data }) {
   const history = useHistory();
   const crud = useCrud();
 

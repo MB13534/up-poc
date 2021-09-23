@@ -20,6 +20,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
     "start": "node app.js",
+    "add:model": "node bin/addModel.js",
+    "add:page": "node bin/addPage.js",
     "dev": "nodemon app.js"
   },
   "devDependencies": {
@@ -31,15 +33,21 @@
     "auth0": "^2.36.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
+    "chalk": "^4.1.2",
+    "commander": "^8.1.0",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "express-jwt-authz": "^2.3.1",
+    "inflected": "^2.1.0",
+    "inquirer": "^8.1.2",
     "jwks-rsa": "^1.5.1",
     "morgan": "^1.9.1",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.3",
+    "rxjs": "^7.3.0",
+    "semver": "^7.3.5",
     "sequelize": "^5.16.0",
     "uuid": "^8.3.2"
   }

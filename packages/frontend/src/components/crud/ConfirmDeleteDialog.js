@@ -4,7 +4,6 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import { displayName } from "../../pages/models/ContactsConfig";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import { deleteRecord } from "../../redux/actions/crudActions";
@@ -18,6 +17,7 @@ export function ConfirmDeleteDialog({
   modelName,
   open,
   setOpen,
+  config,
   afterDelete = () => {},
 }) {
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ export function ConfirmDeleteDialog({
       <DialogContent>
         <DialogContentText style={{ textAlign: "center" }}>
           Are you sure you want to delete{" "}
-          <strong>{displayName(confirmDialogPayload)}</strong>?
+          <strong>{config.displayName(confirmDialogPayload)}</strong>?
         </DialogContentText>
       </DialogContent>
       <DialogActions>

@@ -10,7 +10,7 @@ import IndexAppBar from "./IndexAppBar";
 import { useHistory } from "react-router-dom";
 import { useCrud } from "../../CrudProvider";
 
-function CrudIndexPage({ width, modelName }) {
+function CrudIndexPage({ config, width, modelName }) {
   const app = useApp();
   const crud = useCrud();
   const history = useHistory();
@@ -28,6 +28,7 @@ function CrudIndexPage({ width, modelName }) {
 
       <ConfirmDeleteDialog
         modelName={modelName}
+        displayName={config.displayName}
         open={app.confirmDialogOpen}
         setOpen={app.setConfirmDialogOpen}
         afterDelete={() => {
@@ -41,7 +42,11 @@ function CrudIndexPage({ width, modelName }) {
         setDisplayMode={setDisplayMode}
       />
 
-      <Results modelName={modelName} displayMode={displayMode} />
+      <Results
+        config={config}
+        modelName={modelName}
+        displayMode={displayMode}
+      />
     </div>
   );
 }

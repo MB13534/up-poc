@@ -1,4 +1,3 @@
-import { columns as configColumns } from "../../pages/models/ContactsConfig";
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { DataGrid as MuiDataGrid } from "@material-ui/data-grid";
@@ -63,7 +62,13 @@ const DataTable = styled(MuiDataGrid)`
   }
 `;
 
-export function ResultsTable({ modelName, data, endpoint, width }) {
+export function ResultsTable({
+  configColumns,
+  modelName,
+  data,
+  endpoint,
+  width,
+}) {
   const history = useHistory();
 
   const [columns] = useState(configColumns(modelName));
