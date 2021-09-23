@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { fields } from "../../pages/models/ContactsConfig";
 import {
   Box,
   Card,
@@ -29,6 +28,7 @@ const maybePluralize = (str, count) => {
 };
 
 const Root = styled(Grid)`
+  width: 100%;
   ${(props) =>
     props.theme.palette.type === "dark"
       ? `
@@ -70,6 +70,7 @@ const Alert = styled(MuiAlert)`
 const CompareText = styled.div``;
 
 export function ViewEditor({
+  fields,
   data,
   numCompareMismatches,
   valueCache,

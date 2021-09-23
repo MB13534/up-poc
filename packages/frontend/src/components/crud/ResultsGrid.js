@@ -4,7 +4,6 @@ import { Grid } from "@material-ui/core";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
 import { ActionsDropdown, ActionsDropdownTypes } from "./ActionsDropdown";
-import { displayName } from "../../pages/models/ContactsConfig";
 import Card from "@material-ui/core/Card";
 import { useHistory } from "react-router-dom";
 import { useCrud } from "../../CrudProvider";
@@ -19,7 +18,7 @@ const DataCard = styled(Card)`
         : "rgba(0, 0, 0, 0.12)"};
 `;
 
-export function ResultsGrid({ modelName, data }) {
+export function ResultsGrid({ modelName, data, displayName }) {
   const history = useHistory();
   const crud = useCrud();
 
