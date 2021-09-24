@@ -15,9 +15,6 @@ alter table TOKEN_SCHEMA.TOKEN_TABLE_NAME
       references core.content_node_statuses;
 -- SPLITTER: DO NOT REMOVE --
 alter table TOKEN_SCHEMA.TOKEN_TABLE_NAME
-  add column TOKEN_DISPLAY_COLUMN_NAME text;
--- SPLITTER: DO NOT REMOVE --
-alter table TOKEN_SCHEMA.TOKEN_TABLE_NAME
   add column created_at timestamp default CURRENT_TIMESTAMP;
 -- SPLITTER: DO NOT REMOVE --
 alter table TOKEN_SCHEMA.TOKEN_TABLE_NAME

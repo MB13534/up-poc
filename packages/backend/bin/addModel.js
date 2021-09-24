@@ -165,6 +165,14 @@ async function createTable(name) {
     name = name.split('.')[1];
   }
 
+  let [schema, table] = fullTableName.split('.');
+
+  if (!table) {
+    table = schema;
+  } else {
+    appSchema = schema;
+  }
+
   const requiredCrudColumns = [
     'id',
     'parent_id',
@@ -176,7 +184,6 @@ async function createTable(name) {
     'updated_at',
     'deleted_by',
     'deleted_at',
-    defaultDisplayName,
   ];
 
   try {
@@ -193,7 +200,7 @@ async function createTable(name) {
     log.notice('Table already exists, checking required columns.');
 
     const [results] = await sequelize.query(
-      `SELECT column_name FROM information_schema.columns WHERE table_schema = '${appSchema}' AND table_name = '${name}'`
+      `SELECT column_name FROM information_schema.columns WHERE table_schema = '${appSchema}' AND table_name = '${table}'`
     );
 
     const columns = results.map((x) => x.column_name);
@@ -224,8 +231,7 @@ async function createTable(name) {
       });
 
       sql = sql.replace(/TOKEN_SCHEMA/g, appSchema);
-      sql = sql.replace(/TOKEN_TABLE_NAME/g, name);
-      sql = sql.replace(/TOKEN_DISPLAY_COLUMN_NAME/g, defaultDisplayName);
+      sql = sql.replace(/TOKEN_TABLE_NAME/g, table);
       sql = sql.replace(/TOKEN_DB_USER/g, process.env.PG_USERNAME);
 
       const commands = sql.split('-- SPLITTER: DO NOT REMOVE --');
@@ -243,6 +249,22 @@ async function createTable(name) {
       if (hasErrors) return false;
 
       log.success('Crud fields added to table.');
+    }
+
+    // add the display name column if it doesnt exist
+    if (!columns.includes(defaultDisplayName)) {
+      const displayNameColumnCmd = `alter table ${appSchema}.${table}
+          add column ${defaultDisplayName} text;`;
+
+      log.notice(
+        chalk`Adding display name column: {magenta ${defaultDisplayName}}`
+      );
+
+      try {
+        await sequelize.query(displayNameColumnCmd);
+      } catch (err) {
+        log.warning(err);
+      }
     }
 
     return false;
@@ -391,6 +413,7 @@ function createConfig(name) {
 function done(name) {
   const slug = inflector.dasherize(inflector.underscore(name));
 
+  log.success(chalk`Model {yellow ${name}} was added successfully!`);
   console.log('');
   console.log(chalk`    ┌─────────────────────────────────── ─── ── ─ `);
   console.log(
@@ -402,10 +425,13 @@ function done(name) {
   console.log(chalk`    └───────────────────────────────────────── ─── ── ─ `);
   console.log('');
 
-  log.success(chalk`Model {yellow ${name}} was added successfully!`);
-  log.notice("Don't forget adjust your sidebar routes if desired:");
+  const constantsFile = path.resolve(
+    __dirname,
+    '../../frontend/src/constants/index.js'
+  );
+
   log.notice(
-    '  ' + path.resolve(__dirname, '../../frontend/src/routes/index.js')
+    chalk`To add to sidebar, edit CRUD_MODELS in:\n  {magenta ${constantsFile}}`
   );
 }
 
