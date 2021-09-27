@@ -1,6 +1,9 @@
 const express = require('express');
 const {checkAccessToken} = require('../../core/middleware/auth.js');
-const {wells: model, content_node_statuses} = require('../../core/models');
+const {
+  flow_from_stage: model,
+  content_node_statuses,
+} = require('../../core/models');
 const {buildAppCrudRoutes} = require('../../core/routes/crud/handlers');
 
 const router = express.Router();
