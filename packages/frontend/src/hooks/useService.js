@@ -1,10 +1,12 @@
+import React from "react";
 import { useApp } from "../AppProvider";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Box } from "@material-ui/core";
 
 /**
  * Hook for calling a service
  *
- * @returns {function([serviceMethod, [p1, p2]], *=, *=): Promise<*|undefined>}
+ * @returns {function([serviceMethod, [*]], *=, *=): Promise<*|undefined>}
  * @example
  * import { serviceMethod } from "./path/to/service.js"
  * const service = useService();
@@ -15,7 +17,7 @@ import { useAuth0 } from "@auth0/auth0-react";
  *   );
  */
 const useService = ({ toast = true } = {}) => {
-  const { doToast } = useApp();
+  const { doToast, currentUser } = useApp();
   const { getAccessTokenSilently } = useAuth0();
 
   return async (
@@ -32,10 +34,27 @@ const useService = ({ toast = true } = {}) => {
       toast && doToast("success", successMessage);
       return result;
     } catch (error) {
-      const message = error?.message ?? failureMessage;
+      let message = error?.message ?? failureMessage;
       const type = error?.type ?? "error";
+      const data = error.response.data;
+      if (currentUser.isAdmin && data.length > 0) {
+        message = (
+          <React.Fragment>
+            <Box mb={2}>{message}</Box>
+            <div dangerouslySetInnerHTML={{ __html: data }} />
+          </React.Fragment>
+        );
+        console.error(
+          data
+            .replace(/(<br>)/gi, `\n`)
+            .replace(/(&nbsp;)/gi, " ")
+            .replace(/(&quot;)/gi, '"')
+            .replace(/(<([^>]+)>)/gi, "")
+        );
+      }
       console.error(error);
-      toast && doToast(type, message);
+      toast && doToast(type, message, { persist: true });
+      return false;
     }
   };
 };

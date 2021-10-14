@@ -1,10 +1,4 @@
-import {
-  ActionsRenderer,
-  DateFormatter,
-  IdRenderer,
-  StatusDotRenderer,
-  StatusHelpIconRenderer,
-} from "../../components/crud/ResultsRenderers";
+import { Renderers } from "../../components/crud/ResultsRenderers";
 import { CRUD_FIELD_TYPES } from "../../constants";
 
 export const displayName = (row) => {
@@ -24,12 +18,12 @@ export function columns(modelName) {
       resizeable: false,
       align: "center",
       renderCell: (params) => {
-        return ActionsRenderer(params, modelName);
+        return Renderers.ActionsRenderer(params, modelName);
       },
     },
     {
       field: "content_node_statuses.name",
-      renderHeader: StatusHelpIconRenderer,
+      renderHeader: Renderers.StatusHelpIconRenderer,
       width: 20,
       sortable: false,
       disableColumnMenu: true,
@@ -37,13 +31,13 @@ export function columns(modelName) {
       filterable: false,
       resizeable: false,
       align: "center",
-      renderCell: StatusDotRenderer,
+      renderCell: Renderers.StatusDotRenderer,
     },
     {
       field: "id",
       headerName: "ID",
       width: 100,
-      renderCell: IdRenderer,
+      renderCell: Renderers.IdRenderer,
     },
     {
       field: "firstname",
@@ -74,13 +68,13 @@ export function columns(modelName) {
       field: "created_at",
       headerName: "Created At",
       width: 250,
-      renderCell: DateFormatter,
+      renderCell: Renderers.DateRenderer,
     },
     {
       field: "updated_at",
       headerName: "Updated At",
       width: 200,
-      renderCell: DateFormatter,
+      renderCell: Renderers.DateRenderer,
     },
   ];
 }

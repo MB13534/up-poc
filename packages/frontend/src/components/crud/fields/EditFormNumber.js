@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import {
+  FormHelperText,
+  isWidthDown,
   TextField as MuiTextField,
   useTheme,
   withWidth,
-  isWidthDown,
-  FormHelperText,
 } from "@material-ui/core";
-import { CRUD_FIELD_TYPES } from "../../../constants";
 import { EditFormFieldWrap } from "../EditFormFieldWrap";
 import { DiffViewer } from "../DiffViewer";
 import styled from "styled-components/macro";
+import NumberFormat from "react-number-format";
 
 const DiffWrap = styled.div`
   &.mismatch {
@@ -39,7 +39,35 @@ const DiffWrap = styled.div`
   }
 `;
 
-function EditFormTextField({
+function NumberFormatCustom(props) {
+  let { config, inputRef, onChange, ...other } = props;
+
+  config = config ?? {};
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      defaultValue={config.defaultValue}
+      decimalScale={config.decimalScale ?? 0}
+      suffix={config.suffix ?? ""}
+      prefix={config.prefix ?? ""}
+      allowNegative={config.allowNegative ?? true}
+      fixedDecimalScale={config.fixedDecimalScale ?? false}
+      isNumericString={config.isNumericString ?? true}
+      thousandSeparator={config.thousandSeparator ?? true}
+    />
+  );
+}
+
+function EditFormNumber({
   data,
   type,
   index,
@@ -60,10 +88,10 @@ function EditFormTextField({
 }) {
   const theme = useTheme();
 
-  const isMultiline = type === CRUD_FIELD_TYPES.MULTILINE_TEXT;
-
   const oldValue = { ...currentVersion };
   const newValue = { ...valueCache };
+
+  const config = field.typeConfig ?? {};
 
   useEffect(() => {
     if (
@@ -86,12 +114,17 @@ function EditFormTextField({
     >
       <MuiTextField
         name={field.key}
-        value={values[field.key] ?? ""}
-        multiline={isMultiline}
+        value={values[field.key]}
         rows={5}
         error={hasError}
         fullWidth
-        inputProps={{ tabIndex: index + 1 }}
+        InputProps={{
+          inputProps: {
+            config: config,
+            tabIndex: index + 1,
+          },
+          inputComponent: NumberFormatCustom,
+        }}
         onBlur={handleBlur}
         onChange={handleChange}
         className={
@@ -129,39 +162,6 @@ function EditFormTextField({
               } else {
                 setFieldValue(field.key, oldValue[field.key]);
               }
-
-              /* TODO: dkulak: apply selected line number only (work-in-progress)
-              const leftLines = oldValue[field.key].split("\n");
-              const rightLines = newValue[field.key].split("\n");
-
-              if (side === "L") {
-                if (isMultiline) {
-                  const mergedLines = leftLines.map((x, i) => {
-                    if (i === num - 1) {
-                      return leftLines[i];
-                    } else {
-                      return x;
-                    }
-                  });
-                  setFieldValue(field.key, mergedLines.join("\n"));
-                } else {
-                  setFieldValue(field.key, oldValue[field.key].join("\n"));
-                }
-              } else if (side === "R") {
-                if (isMultiline) {
-                  const mergedLines = rightLines.map((x, i) => {
-                    if (i === num - 1) {
-                      return rightLines[i];
-                    } else {
-                      return x;
-                    }
-                  });
-                  setFieldValue(field.key, mergedLines.join("\n"));
-                } else {
-                  setFieldValue(field.key, newValue[field.key].join("\n"));
-                }*/
-
-              console.log(lineId);
             }}
           />
         </DiffWrap>
@@ -170,4 +170,4 @@ function EditFormTextField({
   );
 }
 
-export default withWidth()(EditFormTextField);
+export default withWidth()(EditFormNumber);

@@ -155,7 +155,7 @@ function ViewSidebarContent({
 
       {data.versions?.length > 0 && (
         <>
-          <HeaderText variant="overline">Versions</HeaderText>
+          <HeaderText variant="overline">Version Timeline</HeaderText>
           <Divider
             style={{
               marginTop: theme.spacing(-2),

@@ -19,6 +19,7 @@ import { scrollWindowToTop } from "../../utils";
 const pages = [
   { title: "Welcome", href: ROUTES.PAGE_DOCS_WELCOME },
   { title: "Getting Started", href: ROUTES.PAGE_DOCS_GETTING_STARTED },
+  { title: "CRUD", href: ROUTES.PAGE_DOCS_CRUD },
   { title: "Support", href: ROUTES.PAGE_DOCS_SUPPORT },
   { title: "Changelog", href: ROUTES.PAGE_CHANGELOG },
 ];

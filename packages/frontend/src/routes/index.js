@@ -32,6 +32,7 @@ import { dasherize, underscore } from "inflected";
 import GettingStarted from "../pages/docs/GettingStarted";
 import Default from "../pages/dashboards/Default";
 import { CrudProvider } from "../CrudProvider";
+import CRUD from "../pages/docs/CRUD";
 const Account = async(() => import("../pages/pages/Account"));
 const Profile = async(() => import("../pages/pages/Profile"));
 
@@ -184,6 +185,12 @@ const documentationRoutes = {
       path: ROUTES.PAGE_DOCS_GETTING_STARTED,
       name: "Getting Started",
       component: GettingStarted,
+      guard: AdminGuard,
+    },
+    {
+      path: ROUTES.PAGE_DOCS_CRUD,
+      name: "CRUD",
+      component: CRUD,
       guard: AdminGuard,
     },
     {

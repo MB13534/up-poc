@@ -11,8 +11,30 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
+      let myUser = { ...user };
+      const roles = myUser[`${process.env.REACT_APP_AUDIENCE}/roles`];
+
       // TODO: dkulak: make this use real users once user section is done
-      setCurrentUser({ ...user, id: "af400afa-6247-4313-9d8a-738a3633db83" });
+      myUser.id = "af400afa-6247-4313-9d8a-738a3633db83";
+
+      if (roles && roles.filter((x) => x === "Administrator").length > 0) {
+        myUser.isAdmin = true;
+      } else {
+        myUser.isAdmin = false;
+      }
+
+      if (roles && roles.filter((x) => x === "Developer").length > 0) {
+        myUser.isDeveloper = true;
+      } else {
+        myUser.isDeveloper = false;
+      }
+
+      if (roles && roles.filter((x) => x === "User").length > 0) {
+        myUser.isUser = true;
+      } else {
+        myUser.isUser = false;
+      }
+      setCurrentUser(myUser);
     }
   }, [user]);
 
@@ -20,20 +42,24 @@ export const AppProvider = ({ children }) => {
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastSeverity, setToastSeverity] = useState("success");
+  const [toastOptions, setToastOptions] = useState({});
 
-  const doToast = (severity, message) => {
+  const doToast = (severity, message, options) => {
     setToastMessage(message);
     setToastSeverity(severity);
     setToastOpen(true);
+    setToastOptions(options);
   };
 
   const toastValues = {
     toastOpen,
     toastMessage,
     toastSeverity,
+    toastOptions,
     setToastOpen,
     setToastMessage,
     setToastSeverity,
+    setToastOptions,
     doToast,
   };
 
