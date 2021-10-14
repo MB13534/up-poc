@@ -5,15 +5,16 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
-import { DIALOG_TYPES, ROUTES } from "../../constants";
+import { DIALOG_TYPES } from "../../constants";
 import { useHistory } from "react-router-dom";
-import { constantify, pluralize } from "inflected";
 import { useApp } from "../../AppProvider";
+import { useCrud } from "../../CrudProvider";
 
 const dialogKey = DIALOG_TYPES.UNSAVED;
 
 export function ConfirmUnsavedDialog({ modelName, open, setOpen }) {
   const history = useHistory();
+  const crud = useCrud();
   const { confirmDialogKey } = useApp();
   const handleClose = () => {
     setOpen(false);
@@ -21,7 +22,7 @@ export function ConfirmUnsavedDialog({ modelName, open, setOpen }) {
 
   const handleAgree = () => {
     handleClose();
-    history.push(ROUTES[`MODEL_${constantify(pluralize(modelName))}`]);
+    history.push(`${crud.getModelBasePath()}`);
   };
 
   return (

@@ -14,6 +14,7 @@ import { findRecords } from "../../services/crudService";
 import { ErrorCard } from "./ErrorCard";
 import useService from "../../hooks/useService";
 import { useApp } from "../../AppProvider";
+import { useDev } from "../../DevProvider";
 
 const Root = styled(Grid)`
   height: calc(100% - 24px);
@@ -25,6 +26,7 @@ const Root = styled(Grid)`
 
 function Results({ config, modelName, width, displayMode }) {
   const app = useApp();
+  const dev = useDev();
   const service = useService({ toast: false });
   const endpoint = inflector.dasherize(
     inflector.underscore(inflector.pluralize(modelName))
@@ -35,6 +37,7 @@ function Results({ config, modelName, width, displayMode }) {
     async () => {
       try {
         let result = await service([findRecords, [modelName]]);
+        dev.setRawApiData(result);
         return { data: result };
       } catch (err) {
         console.error(err);

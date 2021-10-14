@@ -55,9 +55,4 @@ app.use((req, res) => {
 
 app.use(Sentry.Handlers.errorHandler());
 
-// global error handler
-app.use((err, req, res, next) => {
-  res.status(500).json({message: res.sentry, error: {}});
-});
-
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

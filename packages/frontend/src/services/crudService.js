@@ -59,7 +59,7 @@ const applyLatestVersionToRecord = (record) => {
     return version;
   });
 
-  // max of 10 versions
+  // max of 5 versions
   newRecord.versions = newRecord.versions.slice(0, CONFIG.VERSION_LIMIT);
 
   if (record.status_id !== CONTENT_NODE_STATUS_IDS.DRAFT) {

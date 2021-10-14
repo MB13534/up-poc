@@ -9,7 +9,11 @@ export const CRUD_MODELS = [
 
 export const THEME = {
   MAIN_SIDEBAR_WIDTH: 258,
+  DATETIME_FORMAT_SHORT: "MM/dd/yyyy hh:mm a",
   DATE_FORMAT_LONG: "MMM D YYYY, HH:mm A",
+  DATE_FORMAT_SHORT: "MM/dd/yyyy",
+  TIME_FORMAT_LONG: "hh:mm:ss a",
+  TIME_FORMAT_SHORT: "hh:mm a",
 };
 
 export const CONFIG = {
@@ -33,6 +37,7 @@ export const ROUTES = {
   PAGE_DASHBOARD: "/dashboard",
   PAGE_DOCS_WELCOME: "/documentation/welcome",
   PAGE_DOCS_GETTING_STARTED: "/documentation/getting-started",
+  PAGE_DOCS_CRUD: "/documentation/crud",
   PAGE_DOCS_STATE_MANAGEMENT: "/documentation/state-management",
   PAGE_DOCS_SUPPORT: "/documentation/support",
 };
@@ -79,6 +84,11 @@ export const CRUD_FIELD_TYPES = {
   TEXT: "TEXT",
   MULTILINE_TEXT: "MULTILINE_TEXT",
   EMAIL: "EMAIL",
+  DROPDOWN: "DROPDOWN",
+  NUMBER: "NUMBER",
+  DATE: "DATE",
+  TIME: "TIME",
+  DATETIME: "DATETIME",
 };
 
 export const CRUD_DISPLAY_MODES = {

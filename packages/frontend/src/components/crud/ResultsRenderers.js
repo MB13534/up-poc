@@ -134,6 +134,17 @@ const IconWrap = styled.div`
   }
 `;
 
+export function AssociatedFieldRenderer(params) {
+  if (params.field.includes(".")) {
+    const [obj, prop] = params.field.split(".");
+    return obj && prop && params.row[obj]
+      ? params.row[obj][prop]
+      : params.value;
+  } else {
+    return params.value;
+  }
+}
+
 export function IdRenderer(params) {
   return (
     <div>
@@ -152,7 +163,7 @@ export function TimestampRenderer(params, type) {
   const value = type === "created" ? params.created_at : params.updated_at;
   const label = type === "created" ? "Created" : "Last Updated";
   const username = "Foo Bar"; // TODO: dkulak: Make this pull the real user
-  const date = DateFormatter({ value });
+  const date = DateRenderer({ value });
   return (
     <Grid
       container
@@ -210,7 +221,7 @@ export function ValueWithIconRenderer(params, label, Icon) {
   );
 }
 
-export function DateFormatter(params) {
+export function DateRenderer(params) {
   let date = moment(params.value)
     .add(moment().utcOffset(), "minutes")
     .format(THEME.DATE_FORMAT_LONG);
@@ -309,3 +320,14 @@ export function StatusDotRenderer(
     </div>
   );
 }
+
+export const Renderers = {
+  AssociatedFieldRenderer,
+  IdRenderer,
+  ActionsRenderer,
+  StatusDotRenderer,
+  StatusHelpIconRenderer,
+  TimestampRenderer,
+  ValueWithIconRenderer,
+  DateRenderer,
+};

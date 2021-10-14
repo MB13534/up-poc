@@ -45,10 +45,23 @@ function EditForm({
       const verb = isPublishing ? "published" : "saved";
       const method = isNewRecord ? createRecord : updateRecord;
 
+      // replace "" with null to prep data for sequelize
+      let parsedValues = JSON.parse(
+        JSON.stringify(values, function (key, value) {
+          return value === "" ? null : value;
+        })
+      );
+
       const data = await service(
-        [method, [modelName, values, isPublishing]],
+        [method, [modelName, parsedValues, isPublishing]],
         `Changes have been ${verb}.`
       );
+
+      if (!data) {
+        setStatus({ sent: false });
+        setSubmitting(false);
+        return;
+      }
 
       if (isNewRecord) {
         resetForm({

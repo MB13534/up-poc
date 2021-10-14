@@ -196,7 +196,10 @@ const SidebarToggleButtonCollapsed = styled(SidebarButton)`
 `;
 
 const Toaster = () => {
-  const { toastOpen, toastMessage, toastSeverity, setToastOpen } = useApp();
+  const { toastOpen, toastMessage, toastSeverity, toastOptions, setToastOpen } =
+    useApp();
+
+  const duration = toastOptions?.persist ? null : 6000;
 
   return (
     <Snackbar
@@ -204,9 +207,13 @@ const Toaster = () => {
       key={toastMessage}
       onClose={() => setToastOpen(false)}
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      autoHideDuration={6000}
+      autoHideDuration={duration}
     >
-      <Alert variant="filled" severity={toastSeverity}>
+      <Alert
+        onClose={() => setToastOpen(false)}
+        variant="filled"
+        severity={toastSeverity}
+      >
         {toastMessage}
       </Alert>
     </Snackbar>
