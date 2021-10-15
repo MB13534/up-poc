@@ -4,6 +4,7 @@ import EditFormTextField from "./fields/EditFormTextField";
 import EditFormDropdown from "./fields/EditFormDropdown";
 import EditFormNumber from "./fields/EditFormNumber";
 import EditFormDateTime from "./fields/EditFormDateTime";
+import { v4 as uuidv4 } from "uuid";
 
 export function EditFormFieldList({
   data,
@@ -60,6 +61,11 @@ export function EditFormFieldList({
       type === CRUD_FIELD_TYPES.DATETIME
     ) {
       FieldComponent = EditFormDateTime;
+    }
+
+    if (type === CRUD_FIELD_TYPES.CUSTOM) {
+      FieldComponent = field.component;
+      field.key = uuidv4();
     }
 
     if (!FieldComponent) {
