@@ -62,6 +62,10 @@ export function generateSchemaShape(fields) {
       schema = schema.email("Email must be a valid email address.");
     }
 
+    if (field.type === CRUD_FIELD_TYPES.CUSTOM) {
+      schema = Yup.mixed();
+    }
+
     if (field.required) {
       schema = schema.required("This field is required.");
     } else {
